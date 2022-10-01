@@ -58,111 +58,46 @@ fetch(siteURL).then(response => response.json())
 					return;
 				}
 
-				linkE.parentElement.parentElement.parentElement.style.backgroundColor = color;
-			},
+			deleteElement(
+				linkE.parentElement.parentElement.parentElement
+			);
+		},
 
-			deleteCandidateByLinkElem: (st, linkE) => {
-				if (st === SearchTypes.Image) {
-					deleteElement(linkE.parentElement);
-					return;
-				}
+		writeLog: (st, formatedLog) => {
+			if (st === SearchTypes.Image)
+				return;
 
-				deleteElement(
-					linkE.parentElement.parentElement.parentElement
-				);
-			},
+			const cardContainer = document.createElement('div');
+			const card = document.createElement('div');
+			const cardSpan = document.createElement('span');
+			const cardText = document.createElement('div');
 
-			writeLog: (st, formatedLog) => {
-				if (st === SearchTypes.Image)
-					return;
+			cardContainer.classList.add('ZINbbc', 'xpd', 'O9g5cc', 'uUPGi', 'gsi4d');
+			card.classList.add('kCrYT');
+			cardText.classList.add('BNeawe', 's3v9rd', 'AP7Wnd');
+			cardText.textContent = formatedLog;
 
-				document.getElementById('result-stats').innerHTML += formatedLog;
-			},
+			cardSpan.appendChild(cardText);
+			card.appendChild(cardSpan);
+			cardContainer.appendChild(card);
+			document.getElementById('main').childNodes[1].after(cardContainer);
+		},
 
-			after: (st) => {
-				if (st !== SearchTypes.Image)
-					return;
+		after: (st) => {
+			if (st !== SearchTypes.Image)
+				return;
 
+			for (const col of document.querySelectorAll('div#islrg>div>div'))
 				(new MutationObserver(( records ) => {
 					for (const record of records)
 						for (const addedNode of record.addedNodes)
 							if (addedNode.nodeType == Node.ELEMENT_NODE)
 								linkProcess(st, addedNode);
-
 				})).observe(
-					document.querySelector('.islrc'),
+					col,
 					{ childList: true },
 				);
-			},
 		},
-		Phone: {
-			supportSearchTypes: [
-			],
-
-			getLinkElems: (st, parentE) => {
-				if (st === SearchTypes.Image)
-					return document.querySelectorAll('.iKjWAf');
-
-				return parentE.querySelectorAll('div.kCrYT>a');
-			},
-
-			coloriseCandidateByLinkElem: (st, linkE, color) => {
-				if (st === SearchTypes.Image) {
-					linkE.style.backgroundColor = color;
-					return;
-				}
-
-				linkE.parentElement.parentElement.style.backgroundColor = color;
-			},
-
-			deleteCandidateByLinkElem: (st, linkE) => {
-				if (st === SearchTypes.Image) {
-					deleteElement(
-						linkE.parentElement
-					);
-					return;
-				}
-
-				deleteElement(
-					linkE.parentElement.parentElement.parentElement
-				);
-			},
-
-			writeLog: (st, formatedLog) => {
-				if (st === SearchTypes.Image)
-					return;
-
-				const cardContainer = document.createElement('div');
-				const card = document.createElement('div');
-				const cardSpan = document.createElement('span');
-				const cardText = document.createElement('div');
-
-				cardContainer.classList.add('ZINbbc', 'xpd', 'O9g5cc', 'uUPGi', 'gsi4d');
-				card.classList.add('kCrYT');
-				cardText.classList.add('BNeawe', 's3v9rd', 'AP7Wnd');
-				cardText.textContent = formatedLog;
-
-				cardSpan.appendChild(cardText);
-				card.appendChild(cardSpan);
-				cardContainer.appendChild(card);
-				document.getElementById('main').childNodes[1].after(cardContainer);
-			},
-
-			after: (st) => {
-				if (st !== SearchTypes.Image)
-					return;
-
-				for (const col of document.querySelectorAll('div#islrg>div>div'))
-					(new MutationObserver(( records ) => {
-						for (const record of records)
-							for (const addedNode of record.addedNodes)
-								if (addedNode.nodeType == Node.ELEMENT_NODE)
-									linkProcess(st, addedNode);
-					})).observe(
-						col,
-						{ childList: true },
-					);
-			},
 		},
 	};
 
@@ -278,7 +213,7 @@ fetch(siteURL).then(response => response.json())
 					continue linkLoop;
 				}
 			}
-		}
+		};
 	};
 
 	const currentST = parseSearchURL(location.href);
